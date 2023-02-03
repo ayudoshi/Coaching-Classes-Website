@@ -1,0 +1,9 @@
+header.navbarjs{
+    background-color: black;
+    background: linear-gradient(rgba(2,2,2,0.8),rgba(0,0,0,0.8));
+}
+
+.review.active{
+    display: block;
+    transition: all ease 0.4s;
+}
