@@ -10,6 +10,10 @@ header li a:hover{
     background-color: #ffd700;
 }
 
+.signin a:hover{
+    color: #ffed88;
+}
+
 #nav-enroll a:hover{
     color: black;
 }

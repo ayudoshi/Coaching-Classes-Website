@@ -60,14 +60,10 @@ header li{
     margin: 0rem 1rem;
     list-style: none;
 }
-header a{
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-}
+
 ul{
     transition: 0.1s;
-    margin-left: 2px;
+    /* margin-left: 0px; */
     margin-top: 15px;
     padding: 8px 0px;    
     position: absolute;
@@ -87,17 +83,22 @@ ul li{
 }
 
 ul li a{
-    font-size: 1.1rem;
-    /* text-transform: capitalize; */
     transition: 0.01s;
 }
 
+header a{
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
 .signin{
     color: white;
     cursor: pointer;
     font-size: 1.4rem;
     /* border-bottom: 1px solid #ffd700; */
 }
+
+
 #nav-enroll{
     font-size: 1.5rem;
     font-weight: 700;
@@ -131,7 +132,7 @@ ul li a{
     left: 0em;
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(2, 2, 2, 0.75),rgba(0, 0, 0, 0.55)) ,no-repeat center center/cover url(../img/navbg4.jpg);
+    background: linear-gradient(rgba(2, 2, 2, 0.75),rgba(0, 0, 0, 0.55)) ,no-repeat center center/cover url(../img/bg7.jpg);
     background-attachment: fixed;
     z-index: -1;
 }
@@ -148,51 +149,13 @@ ul li a{
 #Home h3{
     font-size: 1.3rem;
 }
-
-#Courses{
-    padding-top: 10rem;
-    display: flex;
-    flex-direction: column;
-    margin: 1rem 6rem;
-}
-
-.course a{
-    text-decoration: none;
-    color: black;
-}
-
-.course{
-    align-items: center;
-    display: flex;
-    padding: 3rem 4rem;
-}
-
-.course-content{
-    padding: 3rem 3rem;
-    text-align: justify;
-}
-
-.course img{
-    border-radius: 1.4rem;
-}
-
-.course-content h1{
-    padding-bottom: 1rem;
-    font-size: 2.5rem;
-}
-
-.course-content h3{
-    font-weight: 100;
-    font-size: 1.4rem;
-}
-
-#Info{
+/* #Info{
     font-size: 1rem;
     font-weight: lighter;
     top: 0rem;
-    /* border: 2px solid black; */
+    border: 2px solid black;
     text-align: justify;
-}
+} */
 
 #Enroll-bg{
     padding: 5rem;
@@ -279,7 +242,7 @@ form label{
 }
 
 #About h1{
-    margin: 1.3rem;
+    margin-top: 1.3rem;
     font-size: 2.5em;
     font-variant: small-caps;
 }
@@ -289,11 +252,9 @@ form label{
     margin-top: 1.1rem;
     margin: 1rem 8rem;
 }
-
 .review{
     display: none;
 }
-
 #reviews{
     position: relative;
     /* display: flex;
@@ -412,5 +373,5 @@ form label{
     left: 98%;
 }
 #hr{
-    margin: 0rem 2rem;
+    margin-top: 10rem;
 }

@@ -1,4 +1,4 @@
-var form=document.getElementById('form');
+let form=document.getElementById('form');
 form.addEventListener('submit',(event)=>{
     const enroll={
         name:form[0].value,

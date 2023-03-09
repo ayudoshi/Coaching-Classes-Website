@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 
-const EnrollSchema=mongoose.Schema({
+const RegisterSchema=mongoose.Schema({
     name:{
         type:String,
         required:true
@@ -13,10 +13,10 @@ const EnrollSchema=mongoose.Schema({
         type:Number,
         required:true
     },
-    course:{
+    password:{
         type:String,
         required:true
     }
 });
 
-module.exports=mongoose.model('enroll',EnrollSchema);
+module.exports=mongoose.model('register',RegisterSchema);
