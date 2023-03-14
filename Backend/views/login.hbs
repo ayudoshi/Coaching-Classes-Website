@@ -5,35 +5,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./css/profile.css">
+    <link rel="stylesheet" href="./css/login.css">
     <link rel="stylesheet" href="./css/hover_style.css">
     <link rel="stylesheet" href="./css/jsactive.css">
     <link rel="stylesheet" href="./css/responsive.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Italiana&display=swap" rel="stylesheet">
+    <title>Document</title>
 </head>
-
+<style>
+    header {
+        background-color: black;
+    }
+</style>
 <body>
-
     <header>
         <div id="logo">isha</div>
         <nav>
-            <li><a href="/home">HOME</a></li>
-            <li><a class="cd" href="#Courses">
-                    LANGUAGES
+            <li><a href="index.html">Home</a></li>
+            <li><a class="cd" href="#">
+                    Courses
                     <ul>
-                        <li><a href="/german">GERMAN</a></li>
-                        <li><a href="/english">ENGLISH</a></li>
-                        <li><a href="/spanish">SPANISH</a></li>
+                        <li><a href="german.html">German</a></li>
+                        <li><a href="english.html">English</a></li>
+                        <li><a href="gujrathi.html">Gujrathi</a></li>
                     </ul>
                 </a>
             </li>
-            <li><a href="#Contact">CONTACT</a></li>
+            <li><a href="#Contact">Contact</a></li>
         </nav>
-        <div class="signin profileimg"> <a href="/profile"><img src="./img/profile4.png" alt=""></a> </div>
-        <!-- <div id="nav-enroll"><a href="#Enroll-bg">Enroll</a></div> -->
+        <div class="signin"> <a href="register.html">Register</a> </div>
         <div class="hamburger">
             <span class="bar"></span>
             <span class="bar"></span>
@@ -41,14 +40,29 @@
         </div>
     </header>
 
-    <section id="profile">
-        <div class="details" id="name">Name: Ayush</div>
-        <div class="details" id="email">Email: ayushdoshi19@gmail.com</div>
-        <div class="details" id="phone">Phone No. : 7768589432</div>
-        <div class="details" id="course">Course Enrolled: German</div>
-        <div class="details" id="fees">Fees Paid : Yes</div>
-        <div class="details">Log Out</div>
+    <section id="Enroll-bg">
+
+        {{#if loginStatus}}
+
+                <h3 >{{error}}</h3>
+                {{/if}}
+                {{#if RegisterStatus}}
+                <h3>{{error}}</h3>
+                {{/if}}
+
+        <div id="Enroll-G-Form">
+            <form id="form" action="/login" method="POST">
+                <h3>Login</h3>
+                <input type="email" id="email" name="email" placeholder="Enter Email">
+                <input type="password" id="password" name="password" placeholder="Enter Passsword">
+                <button name="button" id="button">Submit</button>
+                <h4>Dont have an account? <a href="register.html">Register</a> </h4>
+            </form>
+
+        </div>
+
     </section>
+
 
     <section id="Contact">
         <div>
@@ -81,10 +95,12 @@
     </section>
 
     <footer>
-        <div id="copyright">Copyright &copy; www.ishaclasses.com All rights reserved! <br>Designed by Ayush & Ojas</div>
+        <div id="copyright">Copyright &copy; www.ishaclasses.com All rights reserved! <br>Designed by Ayush Doshi</div>
     </footer>
 
-    <!-- <script src="js/profile.js"></script> -->
+
+    {{!-- <script src="../../Frontend/js/test.js"></script> --}}
+
 </body>
 
 </html>

@@ -3,6 +3,7 @@ const express = require('express');
 // const router=require('../routes/pages');
 const register = require('../models/register');
 const jwt = require('jsonwebtoken');
+const email = require('../controllers/email');
 
 
 
@@ -18,7 +19,12 @@ exports.register = async (req, res) => {
     }
 
     if (values != null) {
-        res.json({ status: "error", error: "Email already registered" });
+        
+        // res.render('login',{
+        //     RegisterStatus:true,
+        //     error:"Email already exist please login here"
+        // })
+        res.json({ status: "error", msg: "Email already registered" });
     }
     else {
         const Register = new register({
@@ -28,8 +34,18 @@ exports.register = async (req, res) => {
             password: req.body.password
         });
         try {
-            await Register.save().then(() => {
-                return res.redirect('/login');
+
+            Register.save().then(() => {
+                register.findOne({ "email": req.body.email }).then((data) => {
+                    if (email(data.id, data.email)) {
+                        res.json("check email");
+                        res.json({ status: "success", msg: "Confirm your email and login" });
+                    }
+                    else{
+                        res.json({status:"error", msg:'Some error occured please register again'});
+                    }
+                })
+
             })
 
 
@@ -52,7 +68,7 @@ exports.login = async (req, res) => {
     }
 
     if (values == null || values.password != req.body.password) {
-        return res.json({ error: "check details" });
+        res.json({status:"error", msg:'Check your login credentials'});
     }
     else {
         const token = jwt.sign({ id: values.id }, "ayush1234", {
@@ -65,8 +81,7 @@ exports.login = async (req, res) => {
         }
 
         res.cookie("userLoggedIn", token, cookieOptions);
-        return res.redirect("/home");
-        // res.json({status:"success",success:"Logged In"});
+        res.json({status:"success",success:"Logged In"});
     }
 
 };
@@ -79,7 +94,7 @@ exports.loggedIn = async (req, res, next) => {
         let values = [];
         values = await register.findOne({ _id: decoded.id });
         if (values != null) {
-            res.name=values.name;
+            res.name = values.name;
             return next();
         }
     } catch (err) {
@@ -87,19 +102,19 @@ exports.loggedIn = async (req, res, next) => {
     }
 };
 
-exports.getDetails=async(req,res)=>{
-    try{
-        const data=await register.findOne({name:res.name});
-        if(data!=null){
-            let newData={
-                name:data.name,
-                email:data.email,
-                phone:data.phone
+exports.getDetails = async (req, res) => {
+    try {
+        const data = await register.findOne({ name: res.name });
+        if (data != null) {
+            let newData = {
+                name: data.name,
+                email: data.email,
+                phone: data.phone
             }
             res.json(newData);
         }
     }
-    catch(err){
-        res.json({error:"Some error occured in db"});
+    catch (err) {
+        res.json({ error: "Some error occured in db" });
     }
 };

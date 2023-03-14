@@ -1,45 +1,56 @@
-let form=document.getElementById('form');
-form.addEventListener('submit',(event)=>{
+let form = document.getElementById('form-register')
+form.addEventListener('submit', (event) => {
 
-    // if(form[1].value){
-    //     alert("Please check your email");
-    // }else if(form[2].value){
-    //     alert("Please check your phone number");
-    // }
-    if(form[3].value!=form[4].value){
+    if (form.name.value == "") {
+        alert("Enter your name");
+    }
+    else if (form.email.value == "") {
+        alert("Enter your email");
+    }
+    else if (form.phone.value == "") {
+        alert("Enter your phone number");
+    }
+    else if (form.password.value == "") {
+        alert("Enter your passowrd");
+    }
+    else if (form.cpassword.value == "") {
+        alert("Re-enter your passowrd");
+    }
+    else if (form.password.value != form.cpassword.value) {
         alert("Passwords dosent match");
-    }else{
-        const register={
-            name:form[0].value,
-            email:form[1].value,
-            phone:form[2].value,
-            password:form[3].value
+    }
+    else {
+        const register = {
+            name: form.name.value,
+            email: form.email.value,
+            phone: form.phone.value,
+            password: form.password.value
         }
-        fetch("/register",{
-            method:"POST",
-            body:JSON.stringify(register),
-            headers:{
+        fetch("/register", {
+            method: "POST",
+            body: JSON.stringify(register),
+            headers: {
                 "Content-Type": "application/json"
             }
-        }).then((res)=>{
-            if(res.ok){
+        }).then((res) => {
+            if (res.ok) {
                 return res.json();
             }
-            else{
-                throw new Error("Something went wrong");
+            else {
+                alert("Something went wrong");
             }
-        })
-            .then((data)=>{
-                if(data.message.name==null){
-                    alert("Registered Successfully");
-                }else{
-                    alert("Something went wrong try after some time");
-                }
-            }).catch((error)=>{
-                alert(error);
-            });
-            form.reset();
+        }).then((data) => {
+            if (data.status == "success") {
+                alert(data.msg);
+            } else {
+                alert(data.msg);
+                window.location.replace('/login');
+            }
+        }).catch((error) => {
+            alert(error);
+        });
+    
     }
     event.preventDefault();
-    
+
 })

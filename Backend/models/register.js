@@ -16,6 +16,10 @@ const RegisterSchema=mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    confirmed:{
+        type:Boolean,
+        default:false
     }
 });
 

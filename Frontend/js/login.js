@@ -1,7 +1,7 @@
 let form = document.getElementById('form');
 
 form.addEventListener('submit', (event) => {
-
+console.log(form)
     const login = {
         email: form[0].value,
         password: form[1].value
@@ -14,17 +14,19 @@ form.addEventListener('submit', (event) => {
         }
     }).then((res) => {
         if (res.ok) {
-            console.log(`in first then ${res.ok}`);
+            // console.log(`in first then ${res.ok}`);
             return res.json();
         }
         else {
-            throw new Error("Something went wrong");
+            alert("Something went wrong");
         }
     }).then((data) => {
-        alert(data);
-    }).catch((error) => {
-        alert(error);
-    });
+        if (data.status == "error") {
+            alert(data.msg);
+        } else {
+            window.location.replace('/home');
+        }
+    })
     form.reset();
 
     event.preventDefault();

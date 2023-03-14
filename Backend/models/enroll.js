@@ -16,6 +16,10 @@ const EnrollSchema=mongoose.Schema({
     course:{
         type:String,
         required:true
+    },
+    fees:{
+        type:Boolean,
+        default:false
     }
 });
 
