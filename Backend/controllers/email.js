@@ -6,8 +6,8 @@ const jwt = require('jsonwebtoken');
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: "ayushkishordoshi@gmail.com",
-    pass: "wcmhnbchepeivgov",
+    user: process.env['GMAIL_USER'],
+    pass: process.env['GMAIL_PASS'],
   },
 });
 

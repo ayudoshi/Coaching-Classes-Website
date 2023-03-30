@@ -34,14 +34,17 @@ exports.verify = async (req, res) => {
 
         if (generated_signature == req.body.razorpay_signature) {
             let values = await enroll.findOne({ email: Enroll.email });
-            let feesPaid={
-                fees:"true"
-            }
-            let resp = await enroll.updateOne(values, feesPaid);
-            res.json({
-                status:"success",
-                msg:"payment done"
+            // let feesPaid={
+            //     fees:"true"
+            // }
+            // let resp = await enroll.updateOne(values, feesPaid);
+            enroll.findByIdAndUpdate(values.id,{fees:true}).then(()=>{
+                res.json({
+                    status:"success",
+                    msg:"payment done"
+                })
             })
+            
         }
     } catch (err) {
         console.log(err);
@@ -51,20 +54,18 @@ exports.verify = async (req, res) => {
 
 exports.enrollData = async (req, res) => {
 
-    let values = [];
-
 
     try {
-        values = await enroll.findOne({ "email": req.body.email });
+       Enroll = await enroll.findOne({ "email": req.body.email });
     }
     catch (err) {
         res.json({ status: "error", msg: "Some error occured" });
     }
 
-    if (values!=null && values.fees==true) {
+    if (Enroll!=null && Enroll.fees==true) {
         res.json({ status: "error", msg: "Email already registered for some course" });
     }
-    else if (values!=null && values.fees==false) {
+    else if (Enroll!=null && Enroll.fees==false) {
         res.json({
             status: "success",
             msg: "Pay the fees for the course"
