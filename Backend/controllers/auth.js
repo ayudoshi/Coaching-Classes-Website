@@ -2,6 +2,7 @@ const express = require('express');
 // const app=express();
 // const router=require('../routes/pages');
 const register = require('../models/register');
+const enroll = require('../models/enroll');
 const jwt = require('jsonwebtoken');
 const email = require('../controllers/email');
 
@@ -19,7 +20,7 @@ exports.register = async (req, res) => {
     }
 
     if (values != null) {
-        
+
         // res.render('login',{
         //     RegisterStatus:true,
         //     error:"Email already exist please login here"
@@ -38,11 +39,11 @@ exports.register = async (req, res) => {
             Register.save().then(() => {
                 register.findOne({ "email": req.body.email }).then((data) => {
                     if (email(data.id, data.email)) {
-                        res.json("check email");
+                        // res.json("check email");
                         res.json({ status: "success", msg: "Confirm your email and login" });
                     }
-                    else{
-                        res.json({status:"error", msg:'Some error occured please register again'});
+                    else {
+                        res.json({ status: "error", msg: 'Some error occured please register again' });
                     }
                 })
 
@@ -66,9 +67,14 @@ exports.login = async (req, res) => {
     catch (err) {
         return res.status(404);
     }
-
-    if (values == null || values.password != req.body.password) {
-        res.json({status:"error", msg:'Check your login credentials'});
+    if (values == null) {
+        res.json({ status: "error", msg: 'Email not registered' });
+    }
+    else if (!values.confirmed) {
+        res.json({ status: "error", msg: 'Please verify your email first' });
+    }
+    else if (values.password != req.body.password) {
+        res.json({ status: "error", msg: 'Check your login credentials' });
     }
     else {
         const token = jwt.sign({ id: values.id }, "ayush1234", {
@@ -81,10 +87,16 @@ exports.login = async (req, res) => {
         }
 
         res.cookie("userLoggedIn", token, cookieOptions);
-        res.json({status:"success",success:"Logged In"});
+        res.json({ status: "success", success: "Logged In" });
     }
 
 };
+
+exports.logout = (req, res) => {
+    res.clearCookie("userLoggedIn");
+    res.json({ status: "success" });
+    // res.redirect('/');
+}
 
 exports.loggedIn = async (req, res, next) => {
     // console.log(req.cookies.userLoggedIn);
@@ -94,7 +106,8 @@ exports.loggedIn = async (req, res, next) => {
         let values = [];
         values = await register.findOne({ _id: decoded.id });
         if (values != null) {
-            res.name = values.name;
+
+            res.email = values.email;
             return next();
         }
     } catch (err) {
@@ -104,12 +117,40 @@ exports.loggedIn = async (req, res, next) => {
 
 exports.getDetails = async (req, res) => {
     try {
-        const data = await register.findOne({ name: res.name });
-        if (data != null) {
+        const data = await register.findOne({ email: res.email });
+        const enrollData = await enroll.findOne({ email: res.email });
+        // console.log(enrollData);
+        // console.log(data);
+
+        if (enrollData) {
+            if (enrollData.fees) {
+                let newData = {
+                    name: enrollData.name,
+                    email: enrollData.email,
+                    phone: enrollData.phone,
+                    course: enrollData.course,
+                    fees: enrollData.fees
+                }
+                res.json(newData);
+            } else {
+                let newData = {
+                    name: data.name,
+                    email: data.email,
+                    phone: data.phone,
+                    course: undefined,
+                    fees: undefined
+                }
+                res.json(newData);
+            }
+
+        }
+        else {
             let newData = {
                 name: data.name,
                 email: data.email,
-                phone: data.phone
+                phone: data.phone,
+                course: undefined,
+                fees: undefined
             }
             res.json(newData);
         }

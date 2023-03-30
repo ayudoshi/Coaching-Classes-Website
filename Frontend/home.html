@@ -128,10 +128,18 @@
             <form id="form">
                 <h3>Enroll Form</h3>
                 <input type="text" id="name" name="name" placeholder="Enter Name">
-                <input type="email" id="email" name="email" placeholder="Enter Email">
+                <input type="email" id="email" name="email" disabled="disabled" placeholder="Enter Email">
                 <input type="text" id="phone" name="phone" placeholder="Enter Phone Number">
-                <input type="text" id="course" name="course" placeholder="Enter Course Name">
-                <input type="text" name="fees" value="8,199/-">
+
+                <label for="course"> Select the course : </label>
+                <select name="course" id="course">
+                    <option value="german">German</option>
+                    <option value="english">English</option>
+                    <option value="spanish">Spanish</option>
+                </select>
+
+                <!-- <input type="text" id="course" name="course" placeholder="Enter Course Name"> -->
+                <input type="text" name="fees" value="8,199/-" disabled="disabled">
 
                 <button name="button" id="button">Pay</button>
             </form>

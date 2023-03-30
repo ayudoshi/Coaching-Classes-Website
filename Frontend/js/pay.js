@@ -1,4 +1,14 @@
-let form = document.getElementById('form')
+let form = document.getElementById('form');
+
+fetch('/profileDetails').then((res)=>{
+    if(res.ok) return res.json();
+}).then((data)=>{
+    form.name.value=data.name;
+    form.email.value=data.email;
+    form.phone.value=data.phone;
+})
+
+form.email.value=
 document.getElementById('button').onclick = async function (e) {
     if (form.name.value == "") {
         alert("Enter your name");
@@ -18,6 +28,9 @@ document.getElementById('button').onclick = async function (e) {
             email: form.email.value,
             phone: form.phone.value,
             course: form.course.value
+        }
+        const price={
+            amount:8199
         }
 
         fetch('/enroll', {
@@ -45,7 +58,7 @@ document.getElementById('button').onclick = async function (e) {
 
                 var options = {
                     "key": 'rzp_test_0wINYtdIizGUh1', // Enter the Key ID generated from the Dashboard
-                    "amount": form.fees.value, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                    "amount": 8199, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
                     "currency": "INR",
                     "name": "Coaching Classes",
                     "order_id": orderData.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1

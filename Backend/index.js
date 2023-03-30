@@ -23,7 +23,9 @@ app.use(express.static(staticPath));
 app.set('view engine','html');
 // app.set('view engine','hbs');
 
+app.use('/admin',require('./routes/admin'));
 app.use('/',require('./routes/pages'));
+
 
 
 app.listen(3000);

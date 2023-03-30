@@ -101,11 +101,43 @@ header a{
 }
 
 #profile{
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     padding: 10rem 5rem;
+}
+.heading{
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 .details{
     padding: 1rem 1rem;
+}
+.button{
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 2px;
+    padding: 0.4rem 0.4rem;
+    font-size: 1.2rem;
+}
+.button:hover{
+    /* color: white; */
+    background-color: #ffd700;
+}
+
+/* .button:hover a{
+    color: white;
+} */
+
+#download{
+    display: none;
+}
+
+#download.active{
+    display: block;
+}
+
+.button a{
+    text-decoration: none;
+    color: black;
 }
 
 #Contact{

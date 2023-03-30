@@ -5,6 +5,7 @@ const postEnroll = require('../controllers/postEnroll');
 const auth = require('../controllers/auth');
 const payment = require('../controllers/payment');
 const email = require('../controllers/email');
+const notes=require('../controllers/notes');
 const register = require('../models/register');
 const jwt=require('jsonwebtoken');
 
@@ -15,7 +16,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/german', auth.loggedIn, (req, res) => {
-    if (res.name) {
+    if (res.email) {
         res.sendFile('german.html', { root: staticPath });
     }
     else {
@@ -24,7 +25,7 @@ router.get('/german', auth.loggedIn, (req, res) => {
 });
 
 router.get('/spanish', auth.loggedIn, (req, res) => {
-    if (res.name) {
+    if (res.eamil) {
         res.sendFile('spanish.html', { root: staticPath });
     }
     else {
@@ -33,7 +34,7 @@ router.get('/spanish', auth.loggedIn, (req, res) => {
 });
 
 router.get('/english', auth.loggedIn, (req, res) => {
-    if (res.name) {
+    if (res.eamil) {
         res.sendFile('english.html', { root: staticPath });
     }
     else {
@@ -42,7 +43,7 @@ router.get('/english', auth.loggedIn, (req, res) => {
 });
 
 router.get('/home', auth.loggedIn, (req, res) => {
-    if (res.name) {
+    if (res.email) {
         res.sendFile('home.html', { root: staticPath });
     }
     else {
@@ -51,13 +52,15 @@ router.get('/home', auth.loggedIn, (req, res) => {
 });
 
 router.get('/profile', auth.loggedIn, (req, res) => {
-    if (res.name) {
+    if (res.email) {
         res.sendFile('profile.html', { root: staticPath });
     }
     else {
         res.sendFile('login.html', { root: staticPath });
     }
 });
+
+router.get('/notes',notes.getNotes);
 
 router.get('/profileDetails', auth.loggedIn, auth.getDetails);
 
@@ -69,21 +72,22 @@ router.get('/login', (req, res) => {
     // res.render('login');
 });
 
-// router.get('/payment', (req, res) => {
-//     res.sendFile('payment.html', { root: staticPath });
-// })
+router.get('/logout',auth.logout);
+
+router.get('/getEmail',auth.loggedIn,(req, res)=>{
+    res.json({email:res.email});
+})
 
 router.get('/confirmation/:token', async (req, res) => {
     try {
         const decoded = jwt.verify(req.params.token, "email1234");
-        register.updateOne({ confirmed: "true" ,  where: decoded.id } ).then((resp)=>{
-            // res.redirect('/login');
+
+        register.findByIdAndUpdate(decoded.id,{confirmed:true}).then(()=>{
+            res.redirect('/login');
         })
     } catch (e) {
         res.send('error');
     }
-
-    return res.redirect('/login');
 });
 
 // router.get('/error',(req,res)=>{
