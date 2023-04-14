@@ -42,10 +42,10 @@ router.get('/enrolldata',async(req, res)=>{
         const userDb= await enroll.find({});
     
         userDb.forEach((user)=>{
-            const { id, name, email, phone, course, fees} = user;
+            const { id, name, email, phone, course, fees, paymentid} = user;
             if(fees){
                 let feesPaid="yes";
-                users.push({id, name, email, phone, course, feesPaid});
+                users.push({id, name, email, phone, course, feesPaid, paymentid});
             }else{
                 let feesPaid="no";
                 users.push({id, name, email, phone, course, feesPaid});
@@ -53,7 +53,7 @@ router.get('/enrolldata',async(req, res)=>{
             
         });
     
-        const csvFields = ['Id', 'Name', 'Email', 'Mobile no.', 'Course', 'Fees Paid'];
+        const csvFields = ['Id', 'Name', 'Email', 'Mobile no.', 'Course', 'Fees Paid','Payment ID'];
         const cParser = new csvParser({ csvFields });
         const csvData = cParser.parse(users);
     

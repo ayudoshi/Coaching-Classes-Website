@@ -8,7 +8,7 @@ exports.getNotes = ( req,res )=>{
     fs.readFile(filePath,(err,file)=>{
         if(err){
             console.log(err);
-            return res.send('could not upload file');
+            return res.send('could not getfile');
         }
 
         res.setHeader('Content-Type','application/pdf');

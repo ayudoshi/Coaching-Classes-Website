@@ -20,6 +20,9 @@ const EnrollSchema=mongoose.Schema({
     fees:{
         type:Boolean,
         default:false
+    },
+    paymentid:{
+        type:String
     }
 });
 

@@ -1,6 +1,3 @@
-const express = require('express');
-// const app=express();
-// const router=require('../routes/pages');
 const register = require('../models/register');
 const enroll = require('../models/enroll');
 const jwt = require('jsonwebtoken');
@@ -38,7 +35,7 @@ exports.register = async (req, res) => {
 
             Register.save().then(() => {
                 register.findOne({ "email": req.body.email }).then((data) => {
-                    if (email(data.id, data.email)) {
+                    if (email("verify",data.id, data.email)) {
                         // res.json("check email");
                         res.json({ status: "success", msg: "Confirm your email and login" });
                     }

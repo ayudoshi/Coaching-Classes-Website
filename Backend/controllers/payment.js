@@ -1,12 +1,13 @@
-const express = require('express');
 const payments = require('razorpay');
 const crypto = require('crypto');
 const enroll = require('../models/enroll');
+const email = require('../controllers/email');
+require('dotenv').config();
 // const { validatePaymentVerification } = require('./dist/utils/razorpay-utils');
 
 const instance = new payments({
-    key_id: 'rzp_test_0wINYtdIizGUh1',
-    key_secret: 'dQne6xVtCHQp4fMR8mVuBaiK'
+    key_id: process.env.KEY_ID,
+    key_secret: process.env.KEY_SECRET
 })
 let orderData;
 let Enroll;
@@ -38,7 +39,8 @@ exports.verify = async (req, res) => {
             //     fees:"true"
             // }
             // let resp = await enroll.updateOne(values, feesPaid);
-            enroll.findByIdAndUpdate(values.id,{fees:true}).then(()=>{
+            enroll.findByIdAndUpdate(values.id,{fees:true, paymentid:req.body.razorpay_payment_id}).then(()=>{
+                email("confirmation",req.body.razorpay_payment_id,values.email);
                 res.json({
                     status:"success",
                     msg:"payment done"

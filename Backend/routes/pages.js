@@ -9,6 +9,7 @@ const notes=require('../controllers/notes');
 const register = require('../models/register');
 const jwt=require('jsonwebtoken');
 
+
 const staticPath = path.join(__dirname, '../../Frontend');
 
 router.get('/', (req, res) => {
@@ -83,6 +84,7 @@ router.get('/confirmation/:token', async (req, res) => {
         const decoded = jwt.verify(req.params.token, "email1234");
 
         register.findByIdAndUpdate(decoded.id,{confirmed:true}).then(()=>{
+
             res.redirect('/login');
         })
     } catch (e) {
