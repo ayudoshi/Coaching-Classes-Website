@@ -19,7 +19,7 @@ require('dotenv').config();
 //     }
 // }
 // run();
-
+const port = process.env.PORT
 // mongoose.connect('mongodb://127.0.0.1:27017/wt')
 mongoose.connect(process.env.MONGO_URL)
 .then(() => { 
@@ -46,4 +46,4 @@ app.use('/', require('./routes/pages'));
 
 
 
-app.listen(3000);
+app.listen(port);
