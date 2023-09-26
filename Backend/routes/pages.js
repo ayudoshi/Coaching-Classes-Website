@@ -10,11 +10,12 @@ const register = require('../models/register');
 const jwt=require('jsonwebtoken');
 
 
-const staticPath = path.join(__dirname, '../../Frontend');
+const staticPath = path.join(__dirname, '../../');
 
-router.get('/', (req, res) => {
+router.get('/' ,(req, res) => {
     res.sendFile('index.html', { root: staticPath });
 });
+
 
 router.get('/german', auth.loggedIn, (req, res) => {
     if (res.email) {
@@ -26,7 +27,7 @@ router.get('/german', auth.loggedIn, (req, res) => {
 });
 
 router.get('/spanish', auth.loggedIn, (req, res) => {
-    if (res.eamil) {
+    if (res.email) {
         res.sendFile('spanish.html', { root: staticPath });
     }
     else {
@@ -35,7 +36,7 @@ router.get('/spanish', auth.loggedIn, (req, res) => {
 });
 
 router.get('/english', auth.loggedIn, (req, res) => {
-    if (res.eamil) {
+    if (res.email) {
         res.sendFile('english.html', { root: staticPath });
     }
     else {
@@ -74,6 +75,16 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/logout',auth.logout);
+router.get('/delete',auth.loggedIn,(req,res)=>{
+    if(res.email){
+        if(auth.delete(res.email)){
+            res.clearCookie("userLoggedIn");
+            res.json({status:"success"});
+        }
+    }else{
+        res.json({status:"Cannot delete account now try again"});
+    }
+});
 
 router.get('/getEmail',auth.loggedIn,(req, res)=>{
     res.json({email:res.email});

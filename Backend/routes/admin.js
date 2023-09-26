@@ -7,7 +7,7 @@ const csvParser = require('json2csv').Parser;
 const path = require('path');
 
 
-const staticPath = path.join(__dirname, '../../Frontend');
+const staticPath = path.join(__dirname, '../../');
 
 router.get('/userlist',async(req, res)=>{
 

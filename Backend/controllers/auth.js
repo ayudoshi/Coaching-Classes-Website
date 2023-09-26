@@ -94,7 +94,18 @@ exports.logout = (req, res) => {
     res.json({ status: "success" });
     // res.redirect('/');
 }
-
+exports.delete = async(mail) =>{
+    try{
+        await register.deleteOne({email:mail});
+        await enroll.deleteOne({email:mail});
+        return true;
+    }catch(err){
+        console.log(err);
+        return false;
+    }
+    
+    
+}
 exports.loggedIn = async (req, res, next) => {
     // console.log(req.cookies.userLoggedIn);
     // if(!req.cookies.userLoggedIn) return res.user="error";

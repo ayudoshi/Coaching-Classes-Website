@@ -16,6 +16,9 @@ form.addEventListener('submit', (event) => {
     else if (form.cpassword.value == "") {
         alert("Re-enter your passowrd");
     }
+    else if(form.phone.value < 1000000000 || form.phone.value > 9999999999) {
+        alert("check your phone number")
+    }
     else if (form.password.value != form.cpassword.value) {
         alert("Passwords dosent match");
     }
