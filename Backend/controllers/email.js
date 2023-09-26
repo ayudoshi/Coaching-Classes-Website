@@ -23,7 +23,7 @@ async function sendMail( type,id, email) {
       const emailToken = jwt.sign({ id: id }, "email1234", {
         expiresIn: '1d',
       })
-      const url = `http://localhost:3000/confirmation/${emailToken}`;
+      const url = `https://germanclasses.onrender.com/confirmation/${emailToken}`;
       // const showUrl = `http://localhost:3000/confirm/email`;
 
       await transporter.sendMail({
